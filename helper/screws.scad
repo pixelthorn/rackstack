@@ -13,9 +13,9 @@ m3RadiusSlacked = m3Radius + m3HoleRadiusSlack;
 m3CounterSunkHeadRadius = 3;
 m3CounterSunkHeadLength = 1.7;
 
-m3HexNutWidthAcrossFlats = 5.41;
+m3HexNutWidthAcrossFlats = 5.6;
 m3HexNutWidthAcrossCorners = FtoG(m3HexNutWidthAcrossFlats);
-m3HexNutThickness = 2.2;
+m3HexNutThickness = 2.45;
 
 /********************************************************************************/
 // M4 dimensions
@@ -27,9 +27,9 @@ m4RadiusSlacked = m4Radius + m4HoleRadiusSlack;
 m4CounterSunkHeadRadius = 4;
 m4CounterSunkHeadLength = 2.3;
 
-m4HexNutWidthAcrossFlats = 6.89;
+m4HexNutWidthAcrossFlats = 7;
 m4HexNutWidthAcrossCorners = FtoG(m4HexNutWidthAcrossFlats);
-m4HexNutThickness = 3.07;
+m4HexNutThickness = 3.2;
 
 /********************************************************************************/
 

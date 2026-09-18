@@ -30,4 +30,4 @@ xBarYBarDovetailSlack = xySlack;
 /**********************************************************************************************************************
   Printer/slicer config, mainly used for calculating some special overhangs.
 */
-defaultLayerHeight = 0.3;
+defaultLayerHeight = 0.2;
