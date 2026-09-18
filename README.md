@@ -86,21 +86,25 @@ path to the nightly build is also configured in [rbuild.py](./rbuild.py).
 ### ⚠️ Important:
 Before committing to a full print, please try printing an evaluation print: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances.
 It is very likely you will need to edit the default tolerances in [print.scad](./config/print.scad) for a nice fit.
+Confirm that your screw and nut sizes in [screws.scad](helper/screws.scad) and adjust if needed. Nuts, especially, may vary slightly.
 
 
 ## Trays, Boxes, etc
 
 Some parametric rack mount systems can be found in [rack-mount](./rack-mount). The following rack-mount systems 
 are currently supported:
-- [Enclosed Box](./rack-mount/enclosed-box): For mounting box-shaped objects, without the need for any mounting holes on the box.
-- [Tray](./rack-mount/tray): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
-- [Patch Panel](./rack-mount/patch-panel): Linear patch panel array. Number of keystone slots can be configured.
+- [Enclosed Box](./rack-mount/boxes/enclosed-box): For mounting box-shaped objects, without the need for any mounting holes on the box.
+- [Tray](./rack-mount/trays/tray): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
+- [Patch Panel](./rack-mount/panels/patch-panel): Linear patch panel array. Number of keystone slots can be configured.
 - [Angle Brackets](./rack-mount/angle-bracket): Simple Angle Bracket mounting system. Derived from the Enclosed Box system.
 
-## Rack Mount Catalog
+Additional user generated mounts can be found under [rack-mount](./rack-mount) as well. 
 
-There is a small catalog of various pre-configured rack-mountable parts in the [catalog](./rack-mount/catalog) directory. Please feel free to add anything even remotely
-useful!
+### Generating STLs for Rack Mount parts
+
+Make sure that the correct profileName is set in [rackframe.scad](./config/rackFrame.scad)! 
+Use OpenSCAD or another CAD program to open entry.scad (or other main scad file) in the subfolder and render it then export as STL.
+
 
 ## Designing rack-mount items
 
