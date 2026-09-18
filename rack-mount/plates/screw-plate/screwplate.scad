@@ -1,3 +1,6 @@
+// Not yet tied into the main rack-mount plate, but this is a screw plate that can be used to mount other components to the rack-mount plate. 
+// It has a grid of holes for screws.
+
 //Width
 sizex = 39;
 //Length

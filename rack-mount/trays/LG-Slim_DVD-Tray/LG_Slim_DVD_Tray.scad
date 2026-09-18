@@ -15,7 +15,7 @@ bottomScrewTray (
     trayThickness = 3,
     frontLipHeight = 0,
     backLipHeight = 0,
-//    mountPoints = [[27.5, 34], [107, 34]],
+    mountPoints = [[27.5, 34], [107, 34]],
     frontThickness = 3,
     sideThickness = 3,
     mountPointElevation = 1,

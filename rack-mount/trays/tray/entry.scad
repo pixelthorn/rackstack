@@ -16,8 +16,8 @@ trayU = 4,
 
 // these dimensions are the total base width including padding not usable space. 
 // e.g. 145 baseWidth and 3 sideThickness = 145-(3*2) = 139mm useable space.
-baseWidth = 195,
-baseDepth = 185,
+baseWidth = 160,
+baseDepth = 160,
 
 baseThickness = 3, // tray bottom thickness
 frontThickness = 3, // front plate thickness
