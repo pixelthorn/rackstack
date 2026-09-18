@@ -1,6 +1,6 @@
-include <../common.scad>
+include <../../common.scad>
 
-use <../boxes/enclosed-box/sideRail.scad>
+use <../../boxes/enclosed-box/sideRail.scad>
 
 
 /*
@@ -13,10 +13,10 @@ module angleBrackets (
     visualize = false,
 
 
-    thickness = 3,
-    boxWidth = 160,
-    boxDepth = 120,
-    sideVent = false,
+    thickness = 1,
+    boxWidth = 203,
+    boxDepth = 145,
+    sideVent = true,
     u = 3
 
     // end config //////////////////////////////////////////////////////////////////////////////////////////////////////////
