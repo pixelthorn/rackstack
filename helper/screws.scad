@@ -32,6 +32,21 @@ m4HexNutWidthAcrossCorners = FtoG(m4HexNutWidthAcrossFlats);
 m4HexNutThickness = 3.2;
 
 /********************************************************************************/
+function screwDiameter(screwType) =
+  (screwType == "m3")
+  ? m3Diameter
+  : (screwType == "m4")
+  ? m4Diameter
+  : error("Unsupported screw type");
+
+
+function screwRadius(screwType) =
+  (screwType == "m3")
+  ? m3Radius
+  : (screwType == "m4")
+  ? m4Radius
+  : error("Unsupported screw type");
+
 
 function screwRadiusSlacked(screwType) =
   (screwType == "m3")
