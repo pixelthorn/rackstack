@@ -8,12 +8,12 @@ use <../honeycomb_bracket_tray/bracket.scad>;
 include <../../common.scad>
 
 // ---------------- User Parameters ----------------
-boxWidth        = 195;
-boxDepth        = 200;
+boxWidth = 195;
+boxDepth = 185;
 //max depth for mini is 205
 base_thickness  = 4.0;   // tray plate thickness
 wall_thickness  = 4.0;   // forwarded to entry.scad's thickness
-u               = 4;
+u               = 2;
 sideVent        = false;
 
 slotWidth =5; //Width of ventilation slots in mm (default: 2)
@@ -93,7 +93,7 @@ module angleBrackets_with_vented_tray(
 ) {
     union() {
         // 1) Brackets from your entry.scad
-        __entry_brackets(wall_t=wall_t, width=width, depth=depth, unit=unit, vent=vent);
+        //__entry_brackets(wall_t=wall_t, width=width, depth=depth, unit=unit, vent=vent);
 
         // 2) Tray centered between x=[0,width] and y=[0,depth], with small overlap under rails
         translate([-bondOX, -bondOY, baseZ_in])
