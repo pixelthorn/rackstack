@@ -6,10 +6,24 @@ if [ -z "$1" ]; then
 fi
 
 SCAD_FILE="$1"
-CONFIG="micro"
+CONFIG="mini"
+
+# skip "animate"
+if $(basename "$SCAD_FILE" | grep -q "animate"); then
+    echo "Skipping animation file: $SCAD_FILE"
+    exit 0
+fi 
+if $(basename "$SCAD_FILE" | grep -q "entry_customizers"); then
+    echo "Skipping entry customizers file: $SCAD_FILE"
+    exit 0
+fi 
 
 dir=$(dirname "$SCAD_FILE")
-filename=$(basename "$SCAD_FILE" .scad)
+if $(basename "$SCAD_FILE" | grep -q "entry"); then
+    filename=$(basename "$dir" .scad)
+else
+    filename=$(basename "$SCAD_FILE" .scad)
+fi
 
 openscad \
     --colorscheme "Tomorrow Night" \
