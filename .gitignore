@@ -10,3 +10,6 @@
 **/tmp/
 
 .DS_Store
+
+
+rack-mount/plates/ventilated-plate/ventilated_plate_v1.scad

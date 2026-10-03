@@ -2,6 +2,10 @@
 
 ![display](media/renders/rackDisplayRounded.png)
 
+
+This repo is reorganized version of the [original repo](https://github.com/jazwa/rackstack) with some added rack mounts for personal use. 
+
+
 ### A modular 3d-printable mini rack system
 - ***Mount Anything:*** Perfect for organizing SBCs, mini PCs, small switches, power hubs, etc.
 - ***Fully customizable:*** Fully written in OpenSCAD. Everything, from the dimensions of the rack, to the roundness of the corners, can be modified with a simple code change.
