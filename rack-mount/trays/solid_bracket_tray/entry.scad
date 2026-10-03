@@ -4,7 +4,9 @@
 // - Places right bracket using visualize=true so spacing = boxWidth
 //
 // Keep your project structure so `use <entry.scad>` resolves correctly.
-use <../honeycomb_bracket_tray/bracket.scad>;
+
+//use <../honeycomb_bracket_tray/bracket.scad>;
+use <../../angle-bracket/entry.scad>
 
 // ---------------- User Parameters ----------------
 boxWidth        = 195;

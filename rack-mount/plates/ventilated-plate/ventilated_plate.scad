@@ -4,10 +4,10 @@ use <../../plateBase.scad>
 // Creates a ventilated blank plate with diagonal stripes
 
 // ---------------- User Parameters ----------------
-U               = 15;
+U               = 7;
 plateThickness  = 3.0;  // tray plate thickness
-slotWidth       = 15;  //Width of ventilation slots in mm
-spacing         = 50;   // Distance between stripe centers in mm - must be larger than slotWidth
+slotWidth       = 5;  //Width of ventilation slots in mm
+spacing         = 20;   // Distance between stripe centers in mm - must be larger than slotWidth
 borderX         = 10;   // solid margin left/right of the vent field, in mm
 borderY         = 10;   // solid margin front/back of the vent field, in mm
 screwType       = "m4"; // Mounting screw type (default: "m4")

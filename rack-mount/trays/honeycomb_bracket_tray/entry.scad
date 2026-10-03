@@ -5,7 +5,9 @@
 // - Honeycomb subtraction fixed: keeps walls, removes hex cores
 //
 // Keep your project structure so `use <entry.scad>` resolves correctly.
-use <bracket.scad>;
+
+//use <bracket.scad>;
+use <../../angle-bracket/entry.scad>
 
 // ---------------- User Parameters ----------------
 boxWidth        = 175;
