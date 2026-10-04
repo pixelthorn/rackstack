@@ -35,15 +35,15 @@ railDepth = plateDepth+yAdjustment+(lipWidth*3); // make rail depth end at the e
 
 module box() {
    // Vent window (interior of plate, away from lips and bracket)
-   ventW  = plateWidth - Z - 2*ventBorder;      // X extent
-   ventL  = plateDepth + lipWidth - 2*ventBorder;   // Y extent between front lip and back lip
+   ventW  = plateWidth - Z - 2*ventBorder;      // X vent width
+   ventL  = plateDepth + lipWidth - 2*ventBorder;   // Y vent width between front lip and back lip
 
    // X start: bracket is at x=0 for "left", at x=boxWidth for "right"
    ventX0 = (leftOrRight == "right") ? lipWidth + ventBorder
                                      : Z + ventBorder;
    ventY0 = yAdjustment + lipWidth + ventBorder;
 
-   // Stripe count now depends on depth, not width
+   // Stripe count depends on depth
    numStripes = floor((ventL - slotWidth) / ventSpacing) + 1;
    // Center the group of stripes in the window
    usedL = (numStripes - 1) * ventSpacing + slotWidth;
