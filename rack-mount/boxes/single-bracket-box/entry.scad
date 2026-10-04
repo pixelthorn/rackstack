@@ -1,137 +1,108 @@
 /*
-  Simple angle bracket mounting system. Mainly derived the from enclosed box system. 
+  Single bracket with attached box. Work in progress.
 */
 
 
 include <../../common.scad>
 use <../enclosed-box/sideRail.scad>
 
-/*
-use <../../../misc/misc_boards.scad>
-use <../../../misc/device_raspberrypi.scad>
-board_raspberrypi_4_model_b();
-raspberry_pi_zero(withHeader=true);
-*/
-
-
-    
-// Does not affect any part dimensions. Set this to true to visualize how a box would be mounted.
-visualize = false;
 
 // ---------------- User Parameters ----------------
-leftOrRight = "right";  //TBD
+leftOrRight = "right";  
+u = 2;
 thickness = 3;
 sideVent = false;
-u =    2;
-boxWidth = 195; // width from rail to rail
 
-
-// 85.6mm (length) × 56.5mm (width) × 17mm (height)
 // internal box plate measurements
 plateWidth = 58; 
 plateDepth = 88; 
 yAdjustment = 10;   // Where to place box on rail. 0=even with front edge
 
 // box side/lip configuration
-lipWidth = 5;
+lipWidth = 10;
 lipHeight = 10;
 // box plate vent configuration
-ventSpacing = 5;
-slotWidth = 5;
+ventSpacing = 8; // distance between stripe centers - must be larger than slotWidth
+slotWidth = 5;  //width of stripes
+ventBorder=5; //space before stripes start
 
 // calculated
-Z=u*screwDiff-(2*thickness);    // mm height (vertical) above bracket base
-railDepth = plateDepth+yAdjustment+(lipWidth*2); // front to back
+boxWidth = plateWidth+lipWidth; //only one lip to account for since bracket is on the other side
+Z=u*screwDiff-(2*thickness);    // place box at same level as bracket base
+railDepth = plateDepth+yAdjustment+(lipWidth*3); // make rail depth end at the edge of the back lip
 
 // end config////////////////////////////////////////
 
-module rPi4b() {
-   // Everything inside this window gets vented; nothing outside it does.
-   ventW = plateWidth-lipWidth-Z ; // disregard lip and bracket widths
-   ventL = plateDepth-2*lipWidth;
-    //echo(ventW, ventL); //ECHO: 39, 78
-   spacing = ventSpacing / sqrt(2); // center-to-center measured across the stripes
-   numStripes = ceil((ventW + ventL) / (2*ventSpacing)) + 1; 
-   // echo(numStripes);  //13
-   
-    n = ceil((ventW + ventL) / (2*spacing)) + 1;             // stripes each side of center
-    stripeLen = sqrt(ventW*ventW + ventL*ventL) + 2*spacing; // over-long, gets clipped
-    
-    
-    difference() {
-        // create plate with edges
-        union() {
-            // base plate
-            translate([0, yAdjustment, -thickness])
-            cube([plateWidth+lipWidth, plateDepth+lipWidth*2, thickness], center=false); 
+module box() {
+   // Vent window (interior of plate, away from lips and bracket)
+   ventW  = plateWidth - Z - 2*ventBorder;      // X extent
+   ventL  = plateDepth + lipWidth - 2*ventBorder;   // Y extent between front lip and back lip
 
-            // front lip
-            translate(v = [0, yAdjustment, -thickness])
-            cube(size = [plateWidth+lipWidth, lipWidth, lipHeight]);
+   // X start: bracket is at x=0 for "left", at x=boxWidth for "right"
+   ventX0 = (leftOrRight == "right") ? lipWidth + ventBorder
+                                     : Z + ventBorder;
+   ventY0 = yAdjustment + lipWidth + ventBorder;
 
-            // back lip
-            translate(v = [0, plateDepth+lipWidth*2+yAdjustment, -thickness])
-            cube(size = [plateWidth+lipWidth, lipWidth, lipHeight]);
-            
-            // side lip
-            rotate([0,0,90])
-            translate(v = [yAdjustment,-(plateWidth-lipWidth+yAdjustment), -thickness])
-            cube(size = [plateDepth+lipWidth*2, lipWidth, lipHeight]);
-            } // end union
-            
-            
-            
-           // add ventilation
+   // Stripe count now depends on depth, not width
+   numStripes = floor((ventL - slotWidth) / ventSpacing) + 1;
+   // Center the group of stripes in the window
+   usedL = (numStripes - 1) * ventSpacing + slotWidth;
+   yPad  = (ventL - usedL) / 2;
 
-           
-            
-      /*
-      // Clip the stripe field to the centered window
-       intersection() {
-            translate([lipWidth*2, lipWidth-2, -thickness])
-                cube([ventW, ventL, thickness*3], center=false);
-            //add the stripes to the plate frame
-            union() {
-                for (k = [-n : 1 : n]) {
-                    translate([plateWidth/2+Z, plateDepth/2+yAdjustment, -thickness])
-                    translate([k*spacing - slotWidth/2, -stripeLen/2, 0])
-                    cube([slotWidth, stripeLen, thickness*3], center=false);
-                }
-            }// end union
-        } // end intersection
-        */
-        
-           union() {
-            for (i=[1 : numStripes]) {
-              translate(v=[(ventW/2.0)+Z, i*6+lipWidth+Z,0])
-                minkowski() {
-                cube(size=[ventW,1,Z], center=true);
-                cylinder(h=1,r=1);
-              } // end minkowski
-           } // end for
-        }  // end union 
-        
-    } // end difference
- }
+   echo(ventW=ventW, ventL=ventL, numStripes=numStripes);
+
+   difference() {
+       union() {
+           // base plate
+           translate([0, yAdjustment, -thickness])
+               cube([boxWidth, plateDepth + lipWidth*2, thickness]);
+
+           // front lip
+           translate([0, yAdjustment, -thickness])
+               cube([boxWidth, lipWidth, lipHeight]);
+
+           // back lip
+           translate([0, plateDepth + lipWidth*2 + yAdjustment, -thickness])
+               cube([boxWidth, lipWidth, lipHeight]);
+
+           // side lip (on the side opposite the bracket)
+           sideLipX = (leftOrRight == "right") ? 0 : boxWidth - lipWidth;
+           translate([sideLipX, yAdjustment, -thickness])
+               cube([lipWidth, plateDepth + lipWidth*2, lipHeight]);
+       }
+
+
+       // vents: rounded-end slots across X, repeated along Y
+        if (numStripes > 0 && ventW > slotWidth)
+        for (i = [0 : numStripes - 1])
+            translate([ventX0, ventY0 + yPad + i*ventSpacing, -thickness - 1])
+                hull() {
+                    translate([slotWidth/2, slotWidth/2, 0])
+                        cylinder(d=slotWidth, h=thickness + 2, $fn=32);
+                    translate([ventW - slotWidth/2, slotWidth/2, 0])
+                        cylinder(d=slotWidth, h=thickness + 2, $fn=32);
+        }
+   }
+}
 
 module angleBracketBox () {    
     // Left Rail
-    
+    if (leftOrRight == "left") {
     sideSupportRailBase(top=false, defaultThickness=thickness, railSideThickness=thickness, supportedZ=Z, supportedY=railDepth, supportedX=boxWidth, sideVent=sideVent);
+    }
     
     // Right Rail
-    /*
-    rightRailTrans = visualize
+    if (leftOrRight == "right") {
+    rightRailTrans = true
         ? translate(v=[boxWidth,0,0]) * mirror(v=[1,0,0])
         : translate(v=[30,0,0]) * mirror(v=[1,0,0]);
     
     multmatrix(rightRailTrans)
     sideSupportRailBase(top=false, defaultThickness=thickness, railSideThickness=thickness, supportedZ=Z, supportedY=railDepth, supportedX=boxWidth, sideVent=sideVent);
-    */
+    }    
     
     // build box on bracket   
-    color([0,0,1])     //Colors work only in Preview mode (F5)
-    rPi4b();
+    box();
     
     
 }
